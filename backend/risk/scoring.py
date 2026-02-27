@@ -27,7 +27,7 @@ def score_asset(asset: Dict) -> Dict:
     Score a single asset.
     Returns the asset dict augmented with 'risk' (0-100) and 'severity'.
     """
-    score = 15  # baseline risk for any public-facing asset
+    score: int = 15  # baseline risk for any public-facing asset
     subdomain = asset["subdomain"].lower()
     ports = set(asset.get("ports", []))
     shodan = asset.get("shodan_data", {})
@@ -35,36 +35,36 @@ def score_asset(asset: Dict) -> Dict:
     # ── Keyword-based risk ──────────────────────────────
     for keyword in HIGH_RISK_KEYWORDS:
         if keyword in subdomain.split(".")[0]:
-            score += 25
+            score = score + 25
             break
 
     # ── Port-based risk ──────────────────────────────────
     risky_hits = RISKY_PORTS.intersection(ports)
     mild_hits = MILD_RISK_PORTS.intersection(ports)
-    score += len(risky_hits) * 15
-    score += len(mild_hits) * 5
+    score = score + (len(risky_hits) * 15)
+    score = score + (len(mild_hits) * 5)
 
     # ── Shodan Intelligence ─────────────────────────────
     if shodan:
         # Vulnerabilities are high-risk
         vulns = shodan.get("vulns", [])
-        score += len(vulns) * 12
+        score = score + (len(vulns) * 12)
 
         # OS Intelligence (End of Life or Legacy OS)
         os_info = shodan.get("os", "")
         if os_info:
             os_lower = os_info.lower()
             if any(x in os_lower for x in ["2008", "2003", "xp", "windows 7", "windows 8"]):
-                score += 30
+                score = score + 30
             elif "linux" in os_lower:
-                score += 5 # General OS detection baseline
+                score = score + 5 # General OS detection baseline
 
         # Service Data Analysis (looking for high-risk headers/signatures)
         banners = shodan.get("data", [])
         for banner in banners:
             data_str = str(banner.get("data", "")).lower()
             if any(match in data_str for match in ["thinkphp", "magento", "log4j", "eternalblue"]):
-                score += 35
+                score = score + 35
 
     # ── SSL-only asset (443 with no risky ports) is safer ─
     if ports == {80, 443} or ports == {443}:
