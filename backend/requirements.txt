@@ -3,7 +3,7 @@ uvicorn[standard]==0.27.1
 pymongo==4.6.2
 requests==2.31.0
 python-dotenv==1.0.1
-google-generativeai==0.5.2
+google-generativeai
 pydantic==2.6.3
 dnspython==2.6.1
 shodan==1.31.0

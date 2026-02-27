@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Search, ArrowRight } from 'lucide-react';
 
 export default function DomainInput({ onScan, loading }) {
     const [domain, setDomain] = useState('');
@@ -12,7 +13,7 @@ export default function DomainInput({ onScan, loading }) {
     return (
         <form className="domain-form" onSubmit={handleSubmit}>
             <div className="input-wrapper">
-                <span className="input-icon">🔍</span>
+                <span className="input-icon"><Search size={16} /></span>
                 <input
                     id="domain-input"
                     type="text"
@@ -36,7 +37,12 @@ export default function DomainInput({ onScan, loading }) {
                         <span className="spinner-small" />
                         Scanning…
                     </span>
-                ) : '⚡ Analyze'}
+                ) : (
+                    <>
+                        <ArrowRight size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />
+                        Analyze
+                    </>
+                )}
             </button>
         </form>
     );

@@ -12,7 +12,7 @@ export default function AttackGraph({ domain, assets }) {
                 id: domain,
                 label: domain,
                 type: 'root',
-                color: '#00d4ff',
+                color: '#FF4F00',
                 size: 10,
             },
             ...assets.map((a) => ({
@@ -20,7 +20,7 @@ export default function AttackGraph({ domain, assets }) {
                 label: a.subdomain,
                 type: 'asset',
                 severity: a.severity,
-                color: SEV_COLOR[a.severity] || '#7fa8d0',
+                color: SEV_COLOR[a.severity] || '#a3a3a3',
                 size: a.severity === 'high' ? 7 : a.severity === 'medium' ? 5 : 3,
                 ports: (a.open_ports || []).join(', '),
                 score: a.risk_score,
@@ -52,7 +52,7 @@ export default function AttackGraph({ domain, assets }) {
     return (
         <div className="attack-graph-wrap">
             <div className="graph-legend">
-                <span className="legend-item"><span className="legend-dot" style={{ background: '#00d4ff' }} />Root Domain</span>
+                <span className="legend-item"><span className="legend-dot" style={{ background: '#FF4F00' }} />Root Domain</span>
                 <span className="legend-item"><span className="legend-dot" style={{ background: '#ff4757' }} />High</span>
                 <span className="legend-item"><span className="legend-dot" style={{ background: '#ffa502' }} />Medium</span>
                 <span className="legend-item"><span className="legend-dot" style={{ background: '#2ed573' }} />Low</span>
@@ -88,7 +88,7 @@ export default function AttackGraph({ domain, assets }) {
                         // label
                         if (globalScale > 0.5) {
                             ctx.font = `${fontSize}px Inter, sans-serif`;
-                            ctx.fillStyle = '#c8d8e8';
+                            ctx.fillStyle = '#d4d4d4';
                             ctx.textAlign = 'center';
                             ctx.fillText(
                                 label.length > 22 ? label.slice(0, 20) + '…' : label,

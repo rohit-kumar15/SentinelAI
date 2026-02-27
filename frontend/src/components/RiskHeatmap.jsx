@@ -57,15 +57,15 @@ export default function RiskHeatmap({ distribution, assets }) {
         <p className="chart-label">Severity Radar</p>
         <ResponsiveContainer width="100%" height={200}>
           <RadarChart data={radarData}>
-            <PolarGrid stroke="#1e3a5f" />
-            <PolarAngleAxis dataKey="subject" tick={{ fill: '#7fa8d0', fontSize: 11 }} />
+            <PolarGrid stroke="#404040" />
+            <PolarAngleAxis dataKey="subject" tick={{ fill: '#a3a3a3', fontSize: 11 }} />
             <PolarRadiusAxis tick={false} axisLine={false} />
             <Radar
               name="Count"
               dataKey="value"
-              stroke="#00d4ff"
-              fill="#00d4ff"
-              fillOpacity={0.25}
+              stroke="#FF4F00"
+              fill="#FF4F00"
+              fillOpacity={0.2}
             />
           </RadarChart>
         </ResponsiveContainer>
@@ -75,21 +75,21 @@ export default function RiskHeatmap({ distribution, assets }) {
       {barData.length > 0 && (
         <div className="heatmap-section">
           <p className="chart-label">Top Assets by Risk</p>
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={280}>
             <BarChart data={barData} layout="vertical" margin={{ left: 0, right: 10 }}>
-              <XAxis type="number" domain={[0, 100]} tick={{ fill: '#7fa8d0', fontSize: 10 }} />
+              <XAxis type="number" domain={[0, 100]} tick={{ fill: '#a3a3a3', fontSize: 10 }} />
               <YAxis
                 type="category"
                 dataKey="name"
                 width={120}
-                tick={{ fill: '#7fa8d0', fontSize: 10 }}
+                tick={{ fill: '#a3a3a3', fontSize: 10 }}
               />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="score" name="Risk Score" radius={[0, 4, 4, 0]}>
                 {barData.map((entry, idx) => (
                   <Cell
                     key={idx}
-                    fill={SEV_COLORS[entry.severity] || '#00d4ff'}
+                    fill={SEV_COLORS[entry.severity] || '#FF4F00'}
                   />
                 ))}
               </Bar>
